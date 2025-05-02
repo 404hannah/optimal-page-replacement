@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Helps in responsiveness -->
+        <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Optimal</title>
+
+        <!-- Adds the logo -->
+        <link rel="icon" type="image/png" href="logo-black.png">
+
+        <!-- Connection to CSS file -->
+        <link rel="stylesheet" href="optimal.css">
+
+        <!-- Links to Roboto Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    </head>
+
+    <body>  
+        <header>
+            <h1>Optimal Page-Replacement Algorithm</h1>
+        </header>
+        <section>
+            <div class="inputs">
+                <div class="block string">
+                    <h4>Page reference string</h4>
+                    <h2 class="txt-string"></h2>
+                    <!-- When this button is clicked, the website generates a random string and gives the page fault solution-->
+                    <button class="btn-gen" onclick="gen()">Generate</button>
+                </div>
+    
+                <div class="block frames">
+                    <h4>Page frames</h4>
+                    <!-- When a page frame is selected, the website sets the number of page frames and gives the page fault solution -->
+                    <select class="select" id="select-size" onchange="solve()">
+                        <option value=3>3</option>
+                        <option value=4>4</option>
+                        <option value=5>5</option>
+                    </select>
+                </div>
+            </div>
+    
+            <div class="block" id="solution">
+                <div class="txt-sol">
+                    <h2>Solution</h2>
+                </div>
+    
+                <!-- Solution is displayed here -->
+                <div class="results">
+                    <h4 class="txt-faults"></h4>
+                    <!-- Generate table through JavaScript -->
+                    <div class="tbl" id="tbl"></div>
+                </div>
+            </div>
+        </section>
+    </body>
+
+    <!-- Connection to JavaScript file -->
+    <script src="optimal.js"></script>
+</html>
