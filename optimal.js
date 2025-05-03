@@ -21,7 +21,7 @@ function gen(){
     */
    
     // string = "80542136150747347025";
-    string = "49030088368660474686";
+    // string = "49030088368660474686";
 
     // Displays the said string
     document.querySelector(".txt-string").innerText = string;
