@@ -14,15 +14,6 @@ function gen(){
         string = string.concat(Math.floor((Math.random() * 10)));
     }
 
-    /* For testing:
-        String -> Frames -> Page Faults
-        80542136150747347025 -> 3 -> 15
-        49030088368660474686 -> 3 -> 9
-    */
-   
-    // string = "80542136150747347025";
-    // string = "49030088368660474686";
-
     // Displays the said string
     document.querySelector(".txt-string").innerText = string;
 
