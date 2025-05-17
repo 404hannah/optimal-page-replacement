@@ -5,12 +5,10 @@ let allPageFrames = [];
 let faults;
 
 function gen(){
-    /* Initializes the string to empty so that the previous generated value/s are not retained */
     string = "";
 
     // Generates random page-reference string
     for(let i=0; i<20; i++){
-        /* A single digit positive integer is generated and then concatenated to a string until the length of the string is 20. */
         string = string.concat(Math.floor((Math.random() * 10)));
     }
 
@@ -21,6 +19,21 @@ function gen(){
     solve();
 }
 
+function solve(){
+    // Without generated random page-reference string, the algorithm would not run.
+    if (!document.querySelector(".txt-string").innerText == ""){
+        arrStr = [];
+        allPageFrames = [];
+        faults = 0;
+
+        // Performs the algorithm
+        main();
+    } else {
+        document.querySelector(".txt-faults").innerText = "Error: No random page-reference string";
+        document.querySelector(".results").style.display = "flex";
+    }
+}
+
 function main(){
     // Takes the page frames selected by the user
     frames = document.querySelector('select').value;
@@ -28,7 +41,6 @@ function main(){
     // Random page-reference string is converted to an array
     arrStr = string.split("");
 
-    /* Initializes an array and a variable to empty so that the previous generated value/s are not retained */
     let pageFrames = [];
     let farthest;
 
@@ -39,40 +51,31 @@ function main(){
     }
     allPageFrames[0].push("Faults");
 
-    // To check comment
     // Each page in the string has an iteration for the page-replacement algorithm
     for(let i=0; i<arrStr.length; i++){
         
         if (pageFrames.includes(arrStr[i])){
-            /* The condition is the previous line checks if the iterated page of the string has an equivalent page in one of the frames. */
-
-            /* If this condition is met, then the program records no changes in the pages inside the frames and page fault is not incremented. */
+            // If the page is in one of the frames, no page fault.
             allPageFrames.push(Array.from(pageFrames));
             allPageFrames[allPageFrames.length-1][Number(frames)] = '0';
         } else if(pageFrames.length < frames){
-            /* If the number of page frames is less than the pages in the frames, then the current page of the iteration is added to a frame. */
+            // An empty frame results to a page fault.
             pageFrames.push(arrStr[i]);
-
-            // Records new pages in frames and page faults
             allPageFrames.push(Array.from(pageFrames));
             allPageFrames[allPageFrames.length-1][Number(frames)] = '1';
             faults += 1;
         } else {
-            /* Initializes the future pages by making a subset of the reference string array starting from the current page. */
+            // An array is filled with future pages
             arrFuture = [];
             arrFuture = arrStr.slice(i, arrStr.length);
 
-            // Sets the farthest to -1 so it will always be overwritten
             farthest = -1;
-
-            /* An array for holding one or more pages that is not included in the array of future pages */
             notInFuture = [];
 
-            // Finds the index of each page in the current page frames.
+            /* Finds the farthest index of the pages in the current page frames and pages not in the future */
             for(let j=0; j<frames; j++){
                 let index = arrFuture.indexOf(pageFrames[j]);
                 
-                /* Finds the farthest index of the pages in the current page frames and stores pages of frames that will not appear later */
                 if (index == -1){
                     notInFuture.push(pageFrames[j]);
                 } else if (index > farthest){
@@ -81,9 +84,8 @@ function main(){
                 }
             }
 
-            /* Frames with pages that will not appear in the future have higher precedence over the frame with the page farthest in the future */
             if(notInFuture.length == 0){
-                // Updates the page frames
+                /* Updates the farthest page if all pages in the frames are present in the future */
                 pageFrames[pageFrames.indexOf(farthestPage)] = arrStr[i];
             } else { 
                 /* If multiple pages in the frames are not present in the list of future pages, FIFO is used. */
@@ -91,10 +93,9 @@ function main(){
                 var indexPast;
                 var leastPage;
 
-                /* Like the array for future pages but from the first element to the element before the current page */
+                // Finds the page that appears first in the string
                 arrPast = arrStr.slice(0, i);
                 notInFuture.forEach(element => {
-                    // Finds the page that appears first in the string
                     indexPast = arrPast.indexOf(element);
                     if(indexPast < least){
                         least = indexPast;
@@ -102,7 +103,6 @@ function main(){
                     }
                 });
 
-                // Finalizes and records the earliest page
                 pageFrames[pageFrames.indexOf(leastPage)] = arrStr[i];
             }
             
@@ -174,19 +174,4 @@ function main(){
     // 
     document.querySelector(".tbl").innerHTML = tableHTML;
     document.querySelector(".results").style.display = "flex";
-}
-
-function solve(){
-    // Without generated random page-reference string, the algorithm would not run.
-    if (!document.querySelector(".txt-string").innerText == ""){
-        arrStr = [];
-        allPageFrames = [];
-        faults = 0;
-
-        // Performs the algorithm
-        main();
-    } else {
-        document.querySelector(".txt-faults").innerText = "Error: No random page-reference string";
-        document.querySelector(".results").style.display = "flex";
-    }
 }
