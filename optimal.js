@@ -20,7 +20,7 @@ function gen(){
 }
 
 function solve(){
-    // Without generated random page-reference string, the algorithm would not run.
+    // Without generating a random page-reference string, the algorithm would not run.
     if (!document.querySelector(".txt-string").innerText == ""){
         arrStr = [];
         allPageFrames = [];
@@ -29,6 +29,7 @@ function solve(){
         // Performs the algorithm
         main();
     } else {
+        // Throws error
         document.querySelector(".txt-faults").innerText = "Error: No random page-reference string";
         document.querySelector(".results").style.display = "flex";
     }
@@ -59,7 +60,7 @@ function main(){
             allPageFrames.push(Array.from(pageFrames));
             allPageFrames[allPageFrames.length-1][Number(frames)] = '0';
         } else if(pageFrames.length < frames){
-            // An empty frame results to a page fault.
+            // An empty frame results in a page fault.
             pageFrames.push(arrStr[i]);
             allPageFrames.push(Array.from(pageFrames));
             allPageFrames[allPageFrames.length-1][Number(frames)] = '1';
