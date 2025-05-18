@@ -89,7 +89,7 @@ function main(){
                 /* Updates the farthest page if all pages in the frames are present in the future */
                 pageFrames[pageFrames.indexOf(farthestPage)] = arrStr[i];
             } else { 
-                /* If multiple pages in the frames are not present in the list of future pages, FIFO is used. */
+                /* If multiple pages in the frames are not present in the list of future pages */
                 let least = 20;
                 var indexPast;
                 var leastPage;
